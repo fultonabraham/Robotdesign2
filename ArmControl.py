@@ -14,6 +14,3 @@ class ArmControl:
 
     def Drop (slef):
         print("Make the Robot drop the object")
-
-   
-  

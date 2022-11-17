@@ -1,10 +1,10 @@
-"""
+'''
 File containing System class
-"""
+'''
 class System:
     def __init__(self, Software) -> None:
         self._Software = Software
-        
+
     def SystemCheck(self):
         print("Make the System run a check")
 
@@ -13,13 +13,13 @@ class System:
 
     def SetSpeed (slef):
         print("Make the System set the movement speed")
-    
+
     def Update (slef):
         print("Make the System run an upate")
 
-"""
+'''
 Communication is a subclass of System
-"""
+'''
 class Communication(System):
     def __init__(self, Software):
         super().__init__(Software)

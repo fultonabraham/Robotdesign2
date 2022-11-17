@@ -1,6 +1,9 @@
 import os
+from CollisionDetection import CollisionDetection
+from DrivingSystem import DrivingSystem
 from MovementControl import MovementControl
 from Robot import *
+from PowerSystem import *
 import time
 import random
 
@@ -10,6 +13,7 @@ class Main:
 
     def run(self):
         self._model.start()
+        '''
         while self._model._running:
             if self._model._curState == 0:
                 self._model.gotoState(1)
@@ -23,18 +27,21 @@ class Main:
                 self._model._running = False
             else:
                 pass
-
+        '''
     def __init__(self):
-        self._movement = MovementControl(2, self)
+        self._collision = CollisionDetection(2, 1)
+        self._power = PowerSystem('XXX')
+        self._driving = DrivingSystem(self, self._collision, self._power)
+        self._movement = MovementControl(2, self, self._driving)
         self.buildModel()
 
 
     def stateEntered(self, state):
         if state == 0:        # what should happen when we enter state 0?
-            coll = self._movement.collision()
+            coll = self._collision.Reroute()
             if(coll == 0):
                 print("Forward")
-                self._movement.forward()
+                self._movement.MoveForward()
                 pick = random.randrange(0,9)
                 if pick == 5:
                     self._model.stop()
@@ -43,29 +50,29 @@ class Main:
                 inputData = input()
                 if inputData == "left":
                     print("Turn left")
-                    self._movement.left()
+                    self._movement.TurnLeft()
                 elif inputData == "rigth":
                     print("Turn right")
-                    self._movement.right()
+                    self._movement.TurnRight()
                 else:
                     print("Valor no identificado, vuelva a intentarlo")
             print("0: Go")
         elif state == 1:      # what should happen when we enter state 1?
             print("1: Wait")
         elif state == 2:      # what should happen when we enter state 2?
-            coll = self._movement.collision()
+            coll = self._collision.Reroute()
             if(coll == 0):
                 print("Forward")
-                self._movement.forward()
+                self._movement.MoveForward()
             else:
                 print("================= Review Collision =================")
                 inputData = input()
                 if inputData == "left":
                     print("Turn left")
-                    self._movement.left()
+                    self._movement.TurnLeft()
                 elif inputData == "rigth":
                     print("Turn right")
-                    self._movement.right()
+                    self._movement.TurnRight()
                 else:
                     print("Valor no identificado, vuelva a intentarlo")
             print("2: Caution")

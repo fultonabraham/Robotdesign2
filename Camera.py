@@ -10,5 +10,3 @@ class Camera:
 
     def TakeVide0(self):
         print("Take Video")
-
-    
