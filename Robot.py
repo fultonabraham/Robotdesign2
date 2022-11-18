@@ -4,9 +4,10 @@
 
 TURN_ON = 0
 TURN_OFF = 1
+TIMEOUT = 2
 
-NUMEVENTS = 2
-EVENTNAMES = ["TURN_ON","TURN_OFF"]
+NUMEVENTS = 3
+EVENTNAMES = ["TURN_ON","TURN_OFF", "TIMEOUT"]
 
 """
 This is the Robot class

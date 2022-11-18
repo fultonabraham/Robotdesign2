@@ -4,12 +4,26 @@ from DrivingSystem import DrivingSystem
 from MovementControl import MovementControl
 from Robot import *
 from PowerSystem import *
+from System import *
 import time
 import random
 
 class Main:
     def buildModel(self):
         self._model = Robot(1, self)
+        self._timer.reset()
+        self._model.addTransition(0, TIMEOUT, 2)
+
+    def stateLeft(self, stateno):
+        self._display.reset()
+        if stateno == 1:
+            self._timer.cancel()
+        elif stateno == 2:
+            self._timer.cancel()
+        elif stateno == 3:
+            self._timer.cancel()
+        else:
+            pass
 
     def run(self):
         self._model.start()
@@ -17,18 +31,23 @@ class Main:
         while self._model._running:
             if self._model._curState == 0:
                 self._model.gotoState(1)
+                time.sleep(0.5)
             if self._model._curState == 1:
                 self._model.gotoState(6)
                 self._model.gotoState(1)
+                time.sleep(0.5)
             if self._model._curState == 2:
                 self._model.gotoState(6)
                 self._model.gotoState(1)
+                time.sleep(0.5)
             if self._model._curState == 3:
                 self._model._running = False
+                time.sleep(0.5)
             else:
                 pass
         '''
     def __init__(self):
+        self._timer = SoftwareTimer(self)
         self._collision = CollisionDetection(2, 1)
         self._power = PowerSystem('XXX')
         self._driving = DrivingSystem(self, self._collision, self._power)
@@ -38,6 +57,7 @@ class Main:
 
     def stateEntered(self, state):
         if state == 0:        # what should happen when we enter state 0?
+            self._timer.cancel()
             coll = self._collision.Reroute()
             if(coll == 0):
                 print("Forward")
@@ -51,7 +71,7 @@ class Main:
                 if inputData == "left":
                     print("Turn left")
                     self._movement.TurnLeft()
-                elif inputData == "rigth":
+                elif inputData == "right":
                     print("Turn right")
                     self._movement.TurnRight()
                 else:
@@ -70,7 +90,7 @@ class Main:
                 if inputData == "left":
                     print("Turn left")
                     self._movement.TurnLeft()
-                elif inputData == "rigth":
+                elif inputData == "right":
                     print("Turn right")
                     self._movement.TurnRight()
                 else:
